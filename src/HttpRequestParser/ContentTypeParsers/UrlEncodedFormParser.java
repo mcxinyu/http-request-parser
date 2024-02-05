@@ -35,8 +35,13 @@ public class UrlEncodedFormParser implements ContentTypeParser {
         Map<String, Object> params = new HashMap<String, Object>();
         for (String stringParam : stringParams) {
             if (!query.equals("")) {
-                String[] param = this.parseParam(stringParam);
-                params.put(param[0], param[1]);
+                try {
+                    // 有一种情况：参数有可能没有值，只是为了避免浏览器缓存而已
+                    String[] param = this.parseParam(stringParam);
+                    params.put(param[0], param[1]);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         }
         return params;

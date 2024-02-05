@@ -23,8 +23,12 @@ public class HttpRequestHeadersParser {
         Map<String, String> requestHeaders = new HashMap<String, String>();
         String nextLine;
         while (!(nextLine = this.inputStreamReader.getNextLine(inputStream)).equals("")) { // headers are terminated by an empty line
-            String[] header = this.parseHeader(nextLine);
-            requestHeaders.put(header[0], header[1]);
+            try {
+                String[] header = this.parseHeader(nextLine);
+                requestHeaders.put(header[0], header[1]);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
         return requestHeaders;
     }
