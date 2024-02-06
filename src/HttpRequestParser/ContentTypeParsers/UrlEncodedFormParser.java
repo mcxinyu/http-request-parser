@@ -39,7 +39,7 @@ public class UrlEncodedFormParser implements ContentTypeParser {
                     // 有一种情况：参数有可能没有值，只是为了避免浏览器缓存而已
                     String[] param = this.parseParam(stringParam);
                     params.put(param[0], param[1]);
-                } catch (ParseException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -50,7 +50,7 @@ public class UrlEncodedFormParser implements ContentTypeParser {
     private String[] parseParam(String query) throws ParseException {
         int index = query.indexOf("=");
         if (index == -1 || index == 0) {
-            throw new ParseException("Improperly formatted query string");
+            throw new ParseException("Improperly formatted query string " + query);
         }
         return new String[]{query.substring(0, index), query.substring(index + 1, query.length())};
     }
